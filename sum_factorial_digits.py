@@ -9,7 +9,7 @@ def factorial(n):
     """
     fact = 1
     for num in range(2, n+1):
-        fact = fact * num
+        fact *= num
 
     return fact
 
@@ -29,4 +29,4 @@ def sum_digits(n):
     return sum
 
 
-sum_digits(factorial(10))
+print(sum_digits(factorial(10)))
