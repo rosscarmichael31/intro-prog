@@ -124,29 +124,42 @@ def play_hangman():
 
     print(f"I am thinking of a word that is {len(secret_word)} letters long.")
 
-    while mistakes_made < 7:
+    while mistakes_made < 6:
         print("-------------")
+        #print(f"You have {3-warnings} warnings left.")
         print(f"You have {6-mistakes_made} guesses left.")
         print(f"Availible letters: {get_available_letters([])}")
         guess = input("Please guess a letter: ")
 
+        # Deal with warnings if necessary
+        # TODO: Make helper function?
         if not guess.isalpha():
+            if warnings >= 2:   #TODO: says 0 warnings left? Maybe change
+                mistakes_made += 1
+                continue 
+
             warnings += 1
-            print("Warning! ")
+            print(f"Oops! That is not a valid letter. You have {3-warnings} warnings left: {get_guessed_word(secret_word, letters_guessed)}")
+            continue
+        
+        if guess in letters_guessed:
+            if warnings >= 2:   # TODO: says 0 warnings left? Maybe change
+                mistakes_made += 1
+                continue
 
+            warnings += 1
+            print(f"Oops! You've already guessed that letter. You now have {3-warnings} warnings left: {get_guessed_word(secret_word, letters_guessed)}")
+            continue 
+
+
+        # Output if guess is correct ot not
+        # Add letter to guessed letters
         letters_guessed.append(guess.lower())
-
         if guess in secret_word:
             print(f"Good guess: {get_guessed_word(secret_word, letters_guessed)}")
         else:
-            mistakes 
+            mistakes_made += 1
             print(f"Oops! That letter is not in my word: {get_guessed_word(secret_word, letters_guessed)}")
 
 
-
-    
-
-
-
-    
 play_hangman()
