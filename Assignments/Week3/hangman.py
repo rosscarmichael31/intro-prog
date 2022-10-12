@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 """
+============
 Hangman Game
 ============
 
@@ -6,9 +9,9 @@ Ross Carmichael
 11/10/22
 
 """
-
 from random import randrange
 from string import *
+import os
 
 
 def load_words():
@@ -28,27 +31,17 @@ def load_words():
 
     # wordlist: list of strings
     wordlist = line.split()
-    print("  ", len(wordlist), "words loaded.")
+    print("  ", len(wordlist), "words loaded.\n")
 
     return wordlist
 
 
-def get_word():
+def get_word(words_dict):
     """
     Returns a random word from the word list
     """
     word = words_dict[randrange(0, len(words_dict))]
     return word
-
-
-# Load words from file
-WORDLIST_FILENAME = "words.txt"
-words_dict = load_words()
-
-# CONSTANTS
-MAX_GUESSES = 6
-MAX_WARNINGS = 3
-VOWELS = ("a", "e", "i", "o", "u")
 
 
 def is_word_guessed(secret_word, letters_guessed):
@@ -137,7 +130,10 @@ def play_hangman(secret_word):
     letters_guessed = []
     won = False
 
+    print("============================")
     print("Welcome to the game Hangman!")
+    print("============================\n")
+
     print(f"I am thinking of a word that is {len(secret_word)} letters long.")
     print(f"You have {MAX_WARNINGS} warnings left.")
 
@@ -148,6 +144,7 @@ def play_hangman(secret_word):
         print(f"Availible letters: {get_available_letters(letters_guessed)}")
 
         guess = input("Please guess a letter: ")
+        os.system("clear")
 
         # Deal with warnings if necessary
         if not guess.isalpha():
@@ -200,8 +197,16 @@ def play_hangman(secret_word):
         mistakes_made, secret_word) if won else losing_message(secret_word)
 
 
+# CONSTANTS
+WORDLIST_FILENAME = "words.txt"
+MAX_GUESSES = 7
+MAX_WARNINGS = 3
+VOWELS = ("a", "e", "i", "o", "u")
+
+
 def main():
-    secret_word = get_word()
+    words_dict = load_words()
+    secret_word = get_word(words_dict)
     play_hangman(secret_word)
 
 
