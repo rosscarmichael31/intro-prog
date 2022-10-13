@@ -205,8 +205,12 @@ VOWELS = ("a", "e", "i", "o", "u")
 
 
 def main():
+    # Load available words
     words_dict = load_words()
+
+    # Choose a secret word
     secret_word = get_word(words_dict)
+
     play_hangman(secret_word)
 
 
